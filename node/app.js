@@ -271,31 +271,52 @@ function receivedMessage(event) {
 }
 
 function passTextToGoogleSearch(senderID, text, start) {
-  const url = `https://www.googleapis.com/customsearch/v1?key=${SEARCH_API_KEY}&cx=${SEARCH_ID}&q=${text}&start=${start}&safe=high&num=4`;
-  request(url, { json: true }, (err, res, body) => {
-    if (!err && res.statusCode === 200) {
-      const elements = [];
-      body.items.forEach(item => {
-        const obj = {
-          title: item.title,
-          subtitle: item.displayLink,
-          image_url: item.pagemap.cse_image
-            ? item.pagemap.cse_image[0].src
-            : null,
-          default_action: {
-            type: "web_url",
-            url: item.link,
-            messenger_extensions: false,
-            webview_height_ratio: "tall"
-          }
-        };
-        elements.push(obj);
-      });
-      sendListTemplate(senderID, elements, text, start++);
-    } else {
-      sendTextMessage(senderID, "No result");
-    }
+  if (["porn", "sex", "tits", "fuck", "ass", "a7a", "kossomk"].includes(text)) {
+    sendTextMessage(
+      senderID,
+      `No result for ${text}, Behave yourself you big boy!`
+    );
+  } else {
+    const url = `https://www.googleapis.com/customsearch/v1?key=${SEARCH_API_KEY}&cx=${SEARCH_ID}&q=${text}&start=${start}&safe=high&num=4`;
+    request(url, { json: true }, (err, res, body) => {
+      if (
+        !err &&
+        res.statusCode === 200 &&
+        Number(body.searchInformation.totalResults)
+      ) {
+        sendListTemplate(
+          senderID,
+          createListTemplateElements(body.items),
+          text,
+          start++
+        );
+      } else {
+        sendTextMessage(
+          senderID,
+          `No result for ${text}, please use related keywords: html, css, JS`
+        );
+      }
+    });
+  }
+}
+
+function createListTemplateElements(target) {
+  const elements = [];
+  target.forEach(item => {
+    const obj = {
+      title: item.title,
+      subtitle: item.displayLink,
+      image_url: item.pagemap.cse_image ? item.pagemap.cse_image[0].src : null,
+      default_action: {
+        type: "web_url",
+        url: item.link,
+        messenger_extensions: false,
+        webview_height_ratio: "tall"
+      }
+    };
+    elements.push(obj);
   });
+  return elements;
 }
 
 /*
