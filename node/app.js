@@ -264,17 +264,16 @@ function receivedMessage(event) {
   }
 
   if (messageText) {
-    passTextToGoogleSearch(senderID, messageText);
+    passTextToGoogleSearch(senderID, messageText, 1);
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
   }
 }
 
-function passTextToGoogleSearch(senderID, text) {
-  const url = `https://www.googleapis.com/customsearch/v1?key=${SEARCH_API_KEY}&cx=${SEARCH_ID}&q=${text}&safe=high&num=4`;
+function passTextToGoogleSearch(senderID, text, start) {
+  const url = `https://www.googleapis.com/customsearch/v1?key=${SEARCH_API_KEY}&cx=${SEARCH_ID}&q=${text}&start=${start}&safe=high&num=4`;
   request(url, { json: true }, (err, res, body) => {
-    console.log(!err);
-    if (!err) {
+    if (!err && res.statusCode === 200) {
       const elements = [];
       body.items.forEach(item => {
         const obj = {
@@ -283,19 +282,16 @@ function passTextToGoogleSearch(senderID, text) {
           image_url: item.pagemap.cse_image
             ? item.pagemap.cse_image[0].src
             : null,
-          buttons: [
-            {
-              title: "View",
-              type: "web_url",
-              url: item.link,
-              messenger_extensions: false,
-              webview_height_ratio: "tall"
-            }
-          ]
+          default_action: {
+            type: "web_url",
+            url: item.link,
+            messenger_extensions: false,
+            webview_height_ratio: "tall"
+          }
         };
         elements.push(obj);
       });
-      sendListTemplate(senderID, elements);
+      sendListTemplate(senderID, elements, text);
     } else {
       sendTextMessage(senderID, "No result");
     }
@@ -337,6 +333,7 @@ function receivedDeliveryConfirmation(event) {
  *
  */
 function receivedPostback(event) {
+  const { postback } = event;
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
   var timeOfPostback = event.timestamp;
@@ -344,25 +341,26 @@ function receivedPostback(event) {
 
   // The 'payload' param is a developer-defined field which is set in a postback
   // button for Structured Messages.
-  var payload = event.postback.payload;
+  const payload = JSON.parse(postback.payload);
 
-  console.log(
-    "Received postback for user %d and page %d with payload '%s' " + "at %d",
-    senderID,
-    recipientID,
-    payload,
-    timeOfPostback
-  );
+  console.log(postback);
 
   // When a postback is called, we'll send a message back to the sender to
   // let them know it was successful
-  if (payload === "getting started") {
+  if (postback.title === "Get Started") {
     fb.api(senderID, { access_token: PAGE_ACCESS_TOKEN }, user => {
       let name = user["first_name"];
-      text = `Hey ${name}, try use keywords like: HTML, PHP, Javascript, etc... to start with and check it out! :D`;
+      text = `Hello and welcome ${name} to AskZak bot, you can ask me anything related to the web industry and I will provide you the best answers!`;
 
-      sendTextMessage(senderID, text);
+      sendTextMessage(senderID, text, function() {
+        sendTextMessage(
+          senderID,
+          "To get you started use one of these keywords: html, php, test automation, etc.."
+        );
+      });
     });
+  } else if (postback.title === "View More") {
+    passTextToGoogleSearch(senderID, payload.text, payload.start + 1);
   }
 }
 

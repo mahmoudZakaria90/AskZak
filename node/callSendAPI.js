@@ -6,7 +6,7 @@ const { PAGE_ACCESS_TOKEN } = require("./tokens");
  *
  */
 
-module.exports = function callSendAPI(messageData) {
+module.exports = function callSendAPI(messageData, callback) {
   request(
     {
       uri: "https://graph.facebook.com/v2.6/me/messages",
@@ -31,6 +31,7 @@ module.exports = function callSendAPI(messageData) {
             recipientId
           );
         }
+        callback && setTimeout(callback, 3000);
       } else {
         console.error(
           "Failed calling Send API",

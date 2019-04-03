@@ -1,7 +1,7 @@
 const callSendAPI = require("./callSendAPI");
 
 module.exports = {
-  sendListTemplate(recipientId, elements) {
+  sendListTemplate(recipientId, elements, text) {
     const messageData = {
       recipient: {
         id: recipientId
@@ -12,7 +12,17 @@ module.exports = {
           payload: {
             template_type: "list",
             top_element_style: "compact",
-            elements
+            elements,
+            buttons: [
+              {
+                title: "View More",
+                payload: JSON.stringify({
+                  start: elements.length,
+                  text
+                }),
+                type: "postback"
+              }
+            ]
           }
         }
       }
@@ -20,7 +30,7 @@ module.exports = {
 
     callSendAPI(messageData);
   },
-  sendTextMessage(recipientId, messageText) {
+  sendTextMessage(recipientId, messageText, callback) {
     var messageData = {
       recipient: {
         id: recipientId
@@ -31,6 +41,6 @@ module.exports = {
       }
     };
 
-    callSendAPI(messageData);
+    callSendAPI(messageData, callback);
   }
 };
