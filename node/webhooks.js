@@ -1,7 +1,7 @@
 const callSendAPI = require("./callSendAPI");
 
 module.exports = {
-  sendListTemplate(recipientId, elements, text) {
+  sendListTemplate(recipientId, elements, text, start) {
     const messageData = {
       recipient: {
         id: recipientId
@@ -17,7 +17,7 @@ module.exports = {
               {
                 title: "View More",
                 payload: JSON.stringify({
-                  start: elements.length,
+                  start: elements.length + start,
                   text
                 }),
                 type: "postback"

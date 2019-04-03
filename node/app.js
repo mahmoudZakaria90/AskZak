@@ -291,7 +291,7 @@ function passTextToGoogleSearch(senderID, text, start) {
         };
         elements.push(obj);
       });
-      sendListTemplate(senderID, elements, text);
+      sendListTemplate(senderID, elements, text, start++);
     } else {
       sendTextMessage(senderID, "No result");
     }
