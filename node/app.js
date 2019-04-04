@@ -277,7 +277,9 @@ function passTextToGoogleSearch(senderID, text, start) {
       `No result for ${text}, Behave yourself you big boy!`
     );
   } else {
-    const url = `https://www.googleapis.com/customsearch/v1?key=${SEARCH_API_KEY}&cx=${SEARCH_ID}&q=${text}&start=${start}&safe=high&num=4`;
+    const url = `https://www.googleapis.com/customsearch/v1?key=${SEARCH_API_KEY}&cx=${SEARCH_ID}&q=${encodeURI(
+      text
+    )}&start=${start}&safe=high&num=4`;
     request(url, { json: true }, (err, res, body) => {
       if (
         !err &&
@@ -362,7 +364,7 @@ function receivedPostback(event) {
 
   // The 'payload' param is a developer-defined field which is set in a postback
   // button for Structured Messages.
-  const payload = JSON.parse(postback.payload);
+  console.log(postback.payload);
 
   console.log(postback);
 
@@ -381,6 +383,7 @@ function receivedPostback(event) {
       });
     });
   } else if (postback.title === "View More") {
+    const payload = JSON.parse(postback.payload);
     passTextToGoogleSearch(senderID, payload.text, payload.start + 1);
   }
 }
