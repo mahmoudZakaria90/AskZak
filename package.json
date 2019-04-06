@@ -1,7 +1,7 @@
 {
-  "name": "messenger-get-started",
+  "name": "askzak",
   "version": "1.0.0",
-  "description": "Get started example for Messenger Platform",
+  "description": "Web-techs chatbot",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
