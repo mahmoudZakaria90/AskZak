@@ -286,7 +286,7 @@ function passTextToGoogleSearch(senderID, text, start) {
   ) {
     sendTextMessage(
       senderID,
-      `No result for ${text}, Behave yourself you big boy!`
+      `No result for ${text}, watch your language u big boy!`
     );
   } else {
     const url = `https://www.googleapis.com/customsearch/v1?key=${SEARCH_API_KEY}&cx=${SEARCH_ID}&q=${encodeURI(
@@ -343,8 +343,6 @@ function createListTemplateElements(target) {
 function receivedPostback(event) {
   const { postback } = event;
   var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfPostback = event.timestamp;
   let text;
 
   // When a postback is called, we'll send a message back to the sender to
