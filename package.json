@@ -2,7 +2,7 @@
   "name": "askzak",
   "version": "1.0.0",
   "description": "Web-techs chatbot",
-  "main": "bin/app.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "lint": "jshint --exclude node_modules .",
