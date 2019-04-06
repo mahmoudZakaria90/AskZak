@@ -20,6 +20,7 @@ const hooks = require("./webhooks");
 const sendListTemplate = hooks.sendListTemplate;
 const sendTextMessage = hooks.sendTextMessage;
 
+const tokens = require("./tokens");
 const {
   PAGE_ACCESS_TOKEN,
   APP_SECRET,
@@ -27,7 +28,7 @@ const {
   SERVER_URL,
   SEARCH_API_KEY,
   SEARCH_ID
-} = require("./tokens");
+} = tokens;
 
 var app = express();
 app.set("port", process.env.PORT || 5000);
