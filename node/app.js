@@ -13,7 +13,6 @@
 const bodyParser = require("body-parser"),
   crypto = require("crypto"),
   express = require("express"),
-  https = require("https"),
   fb = require("fb"),
   request = require("request");
 
@@ -26,7 +25,6 @@ const {
   SEARCH_API_KEY,
   SEARCH_ID
 } = require("./tokens");
-const callSendAPI = require("./callSendAPI");
 
 var app = express();
 app.set("port", process.env.PORT || 5000);
@@ -87,16 +85,10 @@ app.post("/webhook", function(req, res) {
 
       // Iterate over each messaging event
       pageEntry.messaging.forEach(function(messagingEvent) {
-        if (messagingEvent.optin) {
-          receivedAuthentication(messagingEvent);
-        } else if (messagingEvent.message) {
+        if (messagingEvent.message) {
           receivedMessage(messagingEvent);
         } else if (messagingEvent.postback) {
           receivedPostback(messagingEvent);
-        } else if (messagingEvent.read) {
-          receivedMessageRead(messagingEvent);
-        } else if (messagingEvent.account_linking) {
-          receivedAccountLink(messagingEvent);
         } else {
           console.log(
             "Webhook received unknown messagingEvent: ",
@@ -112,29 +104,6 @@ app.post("/webhook", function(req, res) {
     // successfully received the callback. Otherwise, the request will time out.
     res.sendStatus(200);
   }
-});
-
-/*
- * This path is used for account linking. The account linking call-to-action
- * (sendAccountLinking) is pointed to this URL.
- *
- */
-app.get("/authorize", function(req, res) {
-  var accountLinkingToken = req.query.account_linking_token;
-  var redirectURI = req.query.redirect_uri;
-
-  // Authorization Code should be generated per user by the developer. This will
-  // be passed to the Account Linking callback.
-  var authCode = "1234567890";
-
-  // Redirect users to this URI on successful login
-  var redirectURISuccess = redirectURI + "&authorization_code=" + authCode;
-
-  res.render("authorize", {
-    accountLinkingToken: accountLinkingToken,
-    redirectURI: redirectURI,
-    redirectURISuccess: redirectURISuccess
-  });
 });
 
 /*
@@ -166,40 +135,6 @@ function verifyRequestSignature(req, res, buf) {
       throw new Error("Couldn't validate the request signature.");
     }
   }
-}
-
-/*
- * Authorization Event
- *
- * The value for 'optin.ref' is defined in the entry point. For the "Send to
- * Messenger" plugin, it is the 'data-ref' field. Read more at
- * https://developers.facebook.com/docs/messenger-platform/webhook-reference/authentication
- *
- */
-function receivedAuthentication(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfAuth = event.timestamp;
-
-  // The 'ref' field is set in the 'Send to Messenger' plugin, in the 'data-ref'
-  // The developer can set this to an arbitrary value to associate the
-  // authentication callback with the 'Send to Messenger' click event. This is
-  // a way to do account linking when the user clicks the 'Send to Messenger'
-  // plugin.
-  var passThroughParam = event.optin.ref;
-
-  console.log(
-    "Received authentication for user %d and page %d with pass " +
-      "through param '%s' at %d",
-    senderID,
-    recipientID,
-    passThroughParam,
-    timeOfAuth
-  );
-
-  // When an authentication is received, we'll send a message back to the sender
-  // to let them know it was successful.
-  sendTextMessage(senderID, "Authentication successful");
 }
 
 /*
