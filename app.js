@@ -16,11 +16,7 @@ const bodyParser = require("body-parser"),
   fb = require("fb"),
   request = require("request");
 
-const hooks = require("./webhooks");
-const sendListTemplate = hooks.sendListTemplate;
-const sendTextMessage = hooks.sendTextMessage;
-
-const tokens = require("./tokens");
+const { sendListTemplate, sendTextMessage } = require("./webhooks");
 const {
   PAGE_ACCESS_TOKEN,
   APP_SECRET,
@@ -28,7 +24,7 @@ const {
   SERVER_URL,
   SEARCH_API_KEY,
   SEARCH_ID
-} = tokens;
+} = require("./tokens");
 
 var app = express();
 app.set("port", process.env.PORT || 5000);
