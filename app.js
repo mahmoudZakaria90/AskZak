@@ -300,7 +300,7 @@ function receivedPostback(event) {
       sendTextMessage(senderID, text, function() {
         sendTextMessage(
           senderID,
-          "To get you started use one of these keywords: html, php, test automation, ...etc. Or you can normally ask by typing any kind of a question like: what is java?"
+          "To get you started use one of these keywords: `html`, `php`, `test automation`, ...etc. Or you can normally ask by typing any kind of a question like: `what is java`?"
         );
       });
     });
