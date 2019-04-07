@@ -267,7 +267,7 @@ function createListTemplateElements(target) {
     const obj = {
       title: item.title,
       subtitle: item.displayLink,
-      image_url: cse_image[0].src,
+      image_url: cse_image ? cse_image[0].src : null,
       default_action: {
         type: "web_url",
         url: item.link,
