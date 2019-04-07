@@ -31,7 +31,7 @@ module.exports = function callSendAPI(messageData, callback) {
             recipientId
           );
         }
-        callback && setTimeout(callback, 3000);
+        callback && callback();
       } else {
         console.error(
           "Failed calling Send API",
