@@ -258,10 +258,16 @@ function passTextToGoogleSearch(senderID, text, start) {
 function createListTemplateElements(target) {
   const elements = [];
   target.forEach(item => {
+    let cse_image;
+    if (item.pagemap.cse_image) {
+      cse_image = item.pagemap.cse_image;
+    } else {
+      cse_image = null;
+    }
     const obj = {
       title: item.title,
       subtitle: item.displayLink,
-      image_url: item.pagemap.cse_image ? item.pagemap.cse_image[0].src : null,
+      image_url: cse_image[0].src,
       default_action: {
         type: "web_url",
         url: item.link,
