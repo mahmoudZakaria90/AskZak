@@ -261,7 +261,11 @@ function createListTemplateElements(target) {
     const obj = {
       title: item.title,
       subtitle: item.displayLink,
-      image_url: item.pagemap.cse_image ? item.pagemap.cse_image[0].src : null,
+      image_url: item.pagemap
+        ? item.pagemap.cse_image
+          ? item.pagemap.cse_image[0].src
+          : null
+        : null,
       default_action: {
         type: "web_url",
         url: item.link,
