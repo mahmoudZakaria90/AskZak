@@ -286,7 +286,7 @@ function receivedPostback(event) {
 
   // When a postback is called, we'll send a message back to the sender to
   // let them know it was successful
-  if (postback.title === "Get Started") {
+  if (postback.title === "Get Started" || postback.title === "بدء الاستخدام") {
     fb.api(senderID, { access_token: PAGE_ACCESS_TOKEN }, user => {
       let name = user["first_name"];
       text = `Hello and welcome ${name} to AskZak bot, you can ask me anything related to the web industry and I will provide you the best answers!`;
