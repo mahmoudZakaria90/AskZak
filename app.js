@@ -221,6 +221,7 @@ function passTextToGoogleSearch(senderID, text, start) {
       "احا",
       "زوبري",
       "كسمك",
+      "كس امك",
       "suicide"
     ].includes(text)
   ) {
