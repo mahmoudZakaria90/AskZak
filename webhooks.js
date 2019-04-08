@@ -61,7 +61,7 @@ module.exports = {
                 default_action: {
                   type: "web_url",
                   url: "https://www.facebook.com/AskZak-802208680163160/?modal=admin_todo_tour",
-                  webview_height_ratio: "tall"
+                  webview_height_ratio: "full"
                 },
                 buttons: [
                   {
