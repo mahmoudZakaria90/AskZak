@@ -182,12 +182,13 @@ function passTextToGoogleSearch(senderID, text, start) {
     "kossomk",
     "زبي",
     "زب",
+    "باقلبي",
     "احا",
     "زوبري",
     "كسمك",
     "كس امك",
     "suicide"
-  ].includes(text)) {
+  ].includes(text.toLowerCase())) {
     sendTextMessage(senderID, `No result for ${text}, watch your language u big boy!`);
   } else {
     const url = `https://www.googleapis.com/customsearch/v1?key=${SEARCH_API_KEY}&cx=${SEARCH_ID}&q=${encodeURI(text)}&start=${start}&safe=high&num=4`;
