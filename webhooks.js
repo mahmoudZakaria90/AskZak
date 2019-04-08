@@ -53,7 +53,6 @@ module.exports = {
           type: "template",
           payload: {
             template_type: "generic",
-            sharable: true,
             image_aspect_ratio: "square",
             elements: [
               {
@@ -64,7 +63,12 @@ module.exports = {
                   type: "web_url",
                   url: "https://www.facebook.com/AskZak-802208680163160/?modal=admin_todo_tour",
                   webview_height_ratio: "full"
-                }
+                },
+                buttons: [
+                  {
+                    type: "element_share"
+                  }
+                ]
               }
             ]
           }
