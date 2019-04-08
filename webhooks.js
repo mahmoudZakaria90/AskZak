@@ -42,5 +42,33 @@ module.exports = {
     };
 
     callSendAPI(messageData, callback);
+  },
+  sendShareComponent(recipientId) {
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: [
+              {
+                title: "AskZak",
+                image_url: "https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/55840604_802209380163090_4085643487779749888_n.jpg?_nc_cat=109&_nc_ht=scontent-amt2-1.xx&oh=6e3e1d0f2773689142e452498d26e267&oe=5D49D702",
+                subtitle: "Ask me anything related to the web industry",
+                buttons: [
+                  {
+                    type: "element_share"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    };
+    callSendAPI(messageData);
   }
 };
