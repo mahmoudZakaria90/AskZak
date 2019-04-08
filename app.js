@@ -182,7 +182,7 @@ function passTextToGoogleSearch(senderID, text, start) {
     "kossomk",
     "زبي",
     "زب",
-    "باقلبي",
+    "ياقلبي",
     "احا",
     "زوبري",
     "كسمك",
