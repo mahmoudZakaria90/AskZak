@@ -279,7 +279,7 @@ function createListTemplateElements(target) {
         : null,
       default_action: {
         type: "web_url",
-        url: item.htmlFormattedUrl,
+        url: item.link,
         messenger_extensions: false,
         webview_height_ratio: "tall"
       }
