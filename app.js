@@ -236,7 +236,7 @@ function passTextToGoogleSearch(senderID, text, start) {
     );
   } else {
     const url = `https://www.googleapis.com/customsearch/v1?key=${SEARCH_API_KEY}&cx=${SEARCH_ID}&q=${encodeURI(
-      text
+      text.toLowerCase()
     )}&start=${start}&safe=high&num=4`;
     request(
       url,
