@@ -57,11 +57,13 @@ module.exports = {
             elements: [
               {
                 title: "AskZak",
-                image_url: "https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/55840604_802209380163090_4085643487779749888_n.jpg?_nc_cat=109&_nc_ht=scontent-amt2-1.xx&oh=6e3e1d0f2773689142e452498d26e267&oe=5D49D702",
+                image_url:
+                  "https://scontent-ber1-1.xx.fbcdn.net/v/t1.0-9/58384636_814322608951767_8229116691565510656_o.jpg?_nc_cat=110&_nc_eui2=AeEfMedDEuURdNTEbxfaP57Hryukk5fbX71XnVYG-qDwKGowrH5gXL-JWTMFcug-GpqsYllVdMZSW49NYN-gx5J7Qi68xU7ch0nI_5QtEYqJBw&_nc_ht=scontent-ber1-1.xx&oh=89b7912436810320db9780362e99c34a&oe=5D701EDF",
                 subtitle: "Ask me anything related to the web industry.",
                 default_action: {
                   type: "web_url",
-                  url: "https://www.facebook.com/AskZak-802208680163160/?modal=admin_todo_tour",
+                  url:
+                    "https://www.facebook.com/AskZak-802208680163160/?modal=admin_todo_tour",
                   webview_height_ratio: "full"
                 },
                 buttons: [
