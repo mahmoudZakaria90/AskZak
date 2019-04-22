@@ -201,7 +201,7 @@ function receivedMessage(event) {
   }
 
   if (messageText) {
-    passTextToGoogleSearch(senderID, messageText, 1);
+    passTextToGoogleSearch(senderID, messageText);
   } else if (messageAttachments) {
     sendTextMessage(
       senderID,
@@ -210,7 +210,7 @@ function receivedMessage(event) {
   }
 }
 
-function passTextToGoogleSearch(senderID, text, start) {
+function passTextToGoogleSearch(senderID, text, start = 1) {
   if (
     [
       "porn",
