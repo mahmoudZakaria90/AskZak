@@ -57,8 +57,7 @@ module.exports = {
             elements: [
               {
                 title: "AskZak",
-                image_url:
-                  "https://scontent-ber1-1.xx.fbcdn.net/v/t1.0-9/58384636_814322608951767_8229116691565510656_o.jpg?_nc_cat=110&_nc_eui2=AeEfMedDEuURdNTEbxfaP57Hryukk5fbX71XnVYG-qDwKGowrH5gXL-JWTMFcug-GpqsYllVdMZSW49NYN-gx5J7Qi68xU7ch0nI_5QtEYqJBw&_nc_ht=scontent-ber1-1.xx&oh=89b7912436810320db9780362e99c34a&oe=5D701EDF",
+                image_url: "https://scontent-ber1-1.xx.fbcdn.net/v/t1.0-9/58420180_814322605618434_8774108935750680576_n.jpg?_nc_cat=110&_nc_oc=AQlVHx1yjwhsTQgZaVln99CqCzt-dNbZYBNkVuVyTqmKS0dAYLzbAmWE--lxrSU7iV6fcIG02244PyjnOxyoXV5x&_nc_ht=scontent-ber1-1.xx&oh=cdbb1049a5cbd316df003a2c09887c22&oe=5E38B97D",
                 subtitle: "Ask me anything related to the web industry.",
                 default_action: {
                   type: "web_url",
