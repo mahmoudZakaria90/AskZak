@@ -32,9 +32,7 @@ const {
 
 var app = express();
 app.set("port", process.env.PORT || 5000);
-app.set("view engine", "ejs");
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
-app.use(express.static("public"));
 
 if (
   !(
@@ -156,49 +154,20 @@ function verifyRequestSignature(req, res, buf) {
  *
  */
 function receivedMessage(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfMessage = event.timestamp;
-  var message = event.message;
+  const senderID = event.sender.id;
+  const recipientID = event.recipient.id;
+  const timeOfMessage = event.timestamp;
+  const message = event.message;
 
   console.log(
     "Received message for user %d and page %d at %d with message:",
     senderID,
     recipientID,
-    timeOfMessage
+    timeOfMessage,
+    message
   );
-  console.log(JSON.stringify(message));
-
-  var isEcho = message.is_echo;
-  var messageId = message.mid;
-  var appId = message.app_id;
-  var metadata = message.metadata;
-
-  // You may get a text or attachment but not both
   var messageText = message.text;
   var messageAttachments = message.attachments;
-  var quickReply = message.quick_reply;
-
-  if (isEcho) {
-    // Just logging message echoes to console
-    console.log(
-      "Received echo for message %s and app %d with metadata %s",
-      messageId,
-      appId,
-      metadata
-    );
-    return;
-  } else if (quickReply) {
-    var quickReplyPayload = quickReply.payload;
-    console.log(
-      "Quick reply for message %s with payload %s",
-      messageId,
-      quickReplyPayload
-    );
-
-    sendTextMessage(senderID, "Quick reply tapped");
-    return;
-  }
 
   if (messageText) {
     passTextToGoogleSearch(senderID, messageText);
